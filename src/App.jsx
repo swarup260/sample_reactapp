@@ -1,14 +1,14 @@
-import React from "react";
-import { AddPersonView } from "./views/AddPerson.view";
-import { Routes, Route } from "react-router-dom";
+import React from "react"
+import ResponsiveAppBar from "./components/ResponsiveAppBar"
+
+const pages = ["AddPerson", "About"]
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 export const App = () => {
+
     return (
         <>
-            <Routes>
-                <Route path="/" element={<AddPersonView />}>HOME</Route>
-                <Route path="/AddPersonView" element={<AddPersonView />}>AddPerson</Route>
-            </Routes>
+            <ResponsiveAppBar pages={pages} settings={settings} />
         </>
     )
 }
