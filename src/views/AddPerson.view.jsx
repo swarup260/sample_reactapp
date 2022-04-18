@@ -6,7 +6,7 @@ import { AppContext, initialState } from "../state/AppContext"
 import reducer from "../state/action"
 import statePersistent from "../util/statePersistent"
 
-const AddPersonView = () => {
+export default function AddPersonView () {
 
     const [state, dispatch] = useReducer(reducer, statePersistent.get() || initialState)
     return (
@@ -19,5 +19,5 @@ const AddPersonView = () => {
     )
 }
 
-export default AddPersonView
+
 

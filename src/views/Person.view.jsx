@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText'
 import List from '@mui/material/List'
 import statePersistent from "../util/statePersistent";
 
-const Person = () => {
+export default function Person () {
     let params = useParams();
     const { people } = statePersistent.get()
     let selectedPerson = {}
@@ -25,5 +25,3 @@ const Person = () => {
         </Container>
     )
 }
-
-export default Person

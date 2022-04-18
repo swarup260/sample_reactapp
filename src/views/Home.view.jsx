@@ -1,11 +1,9 @@
 import { Container } from '@mui/material';
 
-const Home = () => {
+export default function Home() {
     return (
         <Container fixed className="m-5">
             HOME
         </Container>
     )
 }
-
-export default Home
