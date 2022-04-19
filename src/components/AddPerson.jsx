@@ -2,7 +2,7 @@
 
 import { FormGroup, Button, TextField } from '@mui/material';
 import { useContext } from "react";
-import { AppContext } from '../state/AppContext'
+import { AppContext } from '../state/AddPerson/AppContext'
 import actionEnum from '../state/actionEnum';
 
 const AddPerson = () => {

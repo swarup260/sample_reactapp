@@ -2,8 +2,8 @@ import React, { useReducer } from "react"
 import AddPerson from "../components/AddPerson"
 import PersonList from "../components/PersonList"
 import { Container } from '@mui/material'
-import { AppContext, initialState } from "../state/AppContext"
-import reducer from "../state/action"
+import { AppContext, initialState } from "../state/AddPerson/AppContext"
+import reducer from "../state/AddPerson/action"
 import statePersistent from "../util/statePersistent"
 
 export default function AddPersonView () {

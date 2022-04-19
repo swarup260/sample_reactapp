@@ -3,6 +3,7 @@ const Express = require('express')
 const socket = require('socket.io')
 const http = require('http')
 const cros = require('cors')
+const { v4 } = require('uuid')
 
 /* constant */
 const PORT = process.env.PORT || 5500
@@ -19,7 +20,7 @@ app.get('/', async (_, response) => response.json({ status: true, message: 'hell
 const server = http.createServer(app)
 const io = new socket.Server(server, {
     cors: {
-        origin: "http://127.0.0.1:3000",
+        origin: "*",
         methods: ["GET", "POST"],
         credentials: true
     }
@@ -27,10 +28,21 @@ const io = new socket.Server(server, {
 
 /* server */
 io.on('connection', (socket) => {
-    console.log('a user connected')
 
-    socket.on("NEW_USER",(val) => socket.broadcast.emit("BROADCAST",val))
-    socket.on("SEND_MESSAGE",(val) => console.log(val))
+    socket.on("USER_ADD", (val) => {
+        const boardCastMessage = {
+            id: v4(),
+            content: `USER CONNECTED ${val}`,
+            boardCast: true
+        }
+        console.log(boardCastMessage)
+        socket.broadcast.emit("BROADCAST", boardCastMessage)
+    })
+
+
+    socket.on("connection", (val) => {
+    })
+    socket.on("SEND_MESSAGE", (message) => socket.broadcast.emit("MESSAGE", message))
 
 
     socket.on('disconnect', () => {

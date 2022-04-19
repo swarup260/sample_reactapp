@@ -3,7 +3,7 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import { ListItemButton } from '@mui/material'
-import { AppContext } from "../state/AppContext"
+import { AppContext } from "../state/AddPerson/AppContext"
 import actionEnum from "../state/actionEnum"
 import { Link } from "react-router-dom"
 
