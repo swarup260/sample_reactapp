@@ -1,4 +1,5 @@
 
+import socketEvents from "../../socketEvents";
 import statePersistent from "../../util/statePersistent";
 import actionEnum from "../actionEnum";
 import { initialChatState } from "./ChatContext"
@@ -11,15 +12,21 @@ function messageHandler(state, payload) {
 function sendMessage(state) {
     const message = initialChatState.message
     const messageList = [...state.messageList, state.message]
+    state.socket.emit(socketEvents.SEND_MESSAGE,state.message)
     return { ...state, message, messageList }
 }
 
 function updateMessageList(state, payload) {
-
+    const messageList = [...state.messageList, payload]
+    return { ...state, messageList }
 }
 
 function setSocket(state, payload) {
     return { ...state, socket: payload }
+}
+
+function setUserID(state,payload){
+    return { ...state, userID: payload }
 }
 
 export default function reducer(state, action) {
@@ -32,6 +39,8 @@ export default function reducer(state, action) {
             return updateMessageList(state, action.payload)
         case actionEnum.SET_SOCKET:
             return setSocket(state, action.payload)
+        case actionEnum.SET_USER_ID:
+            return setUserID(state, action.payload)
         default:
             throw new Error("Undefined Action Type")
     }

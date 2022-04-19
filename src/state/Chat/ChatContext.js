@@ -4,6 +4,7 @@
 import React from "react"
 
 export const initialChatState = {
+    userID: '',
     message: {
         content: '',
         time: ''
