@@ -1,7 +1,7 @@
 
 export default {
     STATE: 'STATE',
-    get(key) {
+    get() {
         return JSON.parse(localStorage.getItem(this.STATE))
     },
     set(val) {

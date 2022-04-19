@@ -12,9 +12,11 @@ export default function Chat() {
     const messagesEndRef = useRef(null);
 
     const CHAT_LIST = "chat_list"
+    const USERID = "userid"
+
     const initState = { content: '', time: '' }
     const [message, setMessage] = useState(initState)
-    const [userID, setUserID] = useState("")
+    const [userID, setUserID] = useState(statePersistent.getSession(USERID) ? statePersistent.getSession(USERID).id : "")
     const [messageList, setMessageList] = useState(statePersistent.getSession(CHAT_LIST) || [])
     const [socket, setSocket] = useState(null);
 
@@ -29,25 +31,32 @@ export default function Chat() {
 
     const sendMessageHandler = (e) => {
         e.preventDefault()
+        if (message.content == '') {
+            return
+        }
         const newChatList = [...messageList, message]
         setMessageList(newChatList)
-        setMessage(initState)
         statePersistent.setSession(CHAT_LIST, newChatList)
+        socket.emit("SEND_MESSAGE", message)
+        setMessage(initState)
     }
 
     useEffect(() => {
         const newSocket = io(`http://${window.location.hostname}:5500`);
         setSocket(newSocket);
-        
         return () => newSocket.close();
     }, [setSocket]);
 
+
     useEffect(() => {
-        setUserID(uuidv4())
         if (socket) {
-            socket.emit("NEW_USER",userID)
+            const id = uuidv4()
+            setUserID(id)
+            statePersistent.setSession(USERID, {id})
+            socket.on("connection", () => socket.emit("NEW_USER", id))
         }
     }, [socket])
+
 
     useEffect(() => {
         messagesEndRef.current.scrollTo({
