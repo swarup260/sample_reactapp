@@ -1,4 +1,5 @@
 
+import { v4 as uuid } from "uuid";
 import socketEvents from "../../socketEvents";
 import statePersistent from "../../util/statePersistent";
 import actionEnum from "../actionEnum";
@@ -11,6 +12,10 @@ function messageHandler(state, payload) {
 
 function sendMessage(state) {
     const message = initialChatState.message
+    /* set message id */
+    state.message.id = uuid()
+    state.message.user = state.userID
+    /* updated message LIST */
     const messageList = [...state.messageList, state.message]
     state.socket.emit(socketEvents.SEND_MESSAGE,state.message)
     return { ...state, message, messageList }
@@ -18,6 +23,7 @@ function sendMessage(state) {
 
 function updateMessageList(state, payload) {
     const messageList = [...state.messageList, payload]
+    console.log(messageList)
     return { ...state, messageList }
 }
 
@@ -26,6 +32,7 @@ function setSocket(state, payload) {
 }
 
 function setUserID(state,payload){
+    console.log({userID: payload})
     return { ...state, userID: payload }
 }
 
